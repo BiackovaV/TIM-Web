@@ -1,31 +1,73 @@
 import React from "react";
-import styled from "styled-components";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom"; // Importovanie Link pre navigáciu
+import heroImage from "../assets/hero-img.svg"; // Uprav podľa cesty k tvojmu obrázku
+import Group1 from "../components/landing/Group1"; // Importujeme Group1 komponentu
 
-const GalleryContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 2rem;
-`;
+// Definovanie primárnej farby pre T.I.M.
+const primaryColor = "#C20E4D"; // Tento odtieň použijeme pre názov
 
-const ImageCard = styled.div`
-    img {
-        width: 100%;
-        border-radius: 10px;
-    }
-`;
-
-const Gallery = () => {
-    return (
-        <GalleryContainer>
-            <ImageCard>
-                <img src="https://via.placeholder.com/300" alt="Gallery Item" />
-            </ImageCard>
-            <ImageCard>
-                <img src="https://via.placeholder.com/300" alt="Gallery Item" />
-            </ImageCard>
-        </GalleryContainer>
-    );
+// Štýly pre hero sekciu
+const heroSectionStyle = {
+  position: "relative",
+  height: "100vh", // Výška hero sekcie
+  backgroundImage: `url(${heroImage})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  display: "flex",
+  justifyContent: "center", // Horizontálne zarovnanie na stred
+  alignItems: "center", // Vertikálne zarovnanie na stred
+  color: "#fff",
 };
 
-export default Gallery;
+const textContainerStyle = {
+  maxWidth: "1200px", // Maximálna šírka textového kontajnera
+  width: "100%", // Zabezpečí, že text nebude väčší ako obraz
+  textAlign: "left", // Zarovná text doľava
+  padding: "0 20px", // Pridaj padding pre lepšiu čitateľnosť
+};
+
+const Home = () => {
+  return (
+    <div>
+      {/* Hero sekcia */}
+      <section style={heroSectionStyle}>
+        <div style={textContainerStyle}>
+          <h1
+            style={{
+              fontSize: "4.5rem",
+              marginBottom: "20px",
+              color: primaryColor, // Nastavenie primárnej farby pre názov
+            }}
+          >
+            T.I.M. Group Slovakia
+          </h1>
+          <p style={{ fontSize: "1.5rem", marginBottom: "20px" }}>
+            Aj vaše deti naučíme tancovať!
+          </p>
+          <Button
+            variant="contained"
+            component={Link} // Zabezpečuje navigáciu pri kliknutí
+            to="/schedule" // Odkaz na stránku Schedule
+            sx={{
+              color: "white",
+              backgroundColor: primaryColor, // Používa sa primárna farba
+              borderRadius: "8px",
+              padding: "10px 20px",
+              "&:hover": {
+                backgroundColor: "#D22E5B", // Tmavší červený odtieň pri hoveri
+              },
+            }}
+          >
+            Rozvrh hodín
+          </Button>
+        </div>
+      </section>
+
+      {/* Sekcia O nás */}
+      <Group1 />
+    </div>
+  );
+};
+
+export default Home;
