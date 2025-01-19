@@ -59,11 +59,11 @@ const Group1 = () => {
       <Container style={contentContainerStyle}>
         <div style={textContainerStyle}>
           <Typography variant="h2" style={headingStyle}>
-            O nás
+            O nás :
           </Typography>
           <Typography style={paragraphStyle}>
-            Lorem ipsum dolor sit amet consectetur. Aliquam egestas sed quam aliquam fermentum metus arcu quam et. 
-            Consectetur iaculis diam non amet in. Nunc lacus nisi adipiscing enim sed. Ultrices amet nibh fringilla accumsan.
+          Sme tanečná škola a voláme sa <strong>T.I.M. GROUP SLOVAKIA.</strong> Sme občianské združenie, ktoré od roku <strong>1991</strong> pôsobí na tanečnej scéne až dodnes, 
+          čo je <strong>vyše 30 rokov pôsobenia</strong> nášho tanečného klubu na svetoznámych pódiách.
           </Typography>
           <Button
               variant="outlined"
@@ -80,7 +80,7 @@ const Group1 = () => {
                 },
               }}
             >
-              Viac informácií
+              Zistiť viac 
             </Button>
         </div>
         <Box style={imageContainerStyle} /> {/* Obrázok na pravej strane */}
