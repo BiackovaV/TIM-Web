@@ -19,7 +19,7 @@ const Gallery = () => {
     return (
         <GalleryContainer>
             <ImageCard>
-                <img src="https://via.placeholder.com/300" alt="Gallery Item" />
+                <img src="https://via.placeholder.com/30" alt="Gallery Item" />
             </ImageCard>
             <ImageCard>
                 <img src="https://via.placeholder.com/300" alt="Gallery Item" />

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Box, Typography } from "@mui/material";
 import onasfoto from "../assets/onasfoto.jpg"
 import Team from "../components/landing/Team";
+import Contact from "../pages/Contact"
 
 
 const sectionStyle = {
@@ -56,6 +57,7 @@ const About = () => {
 
         </div>
         <Team showButton={false} isShortDescription={false}/>
+        <Contact/>
      </div>
     );
 }; 

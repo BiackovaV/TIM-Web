@@ -10,7 +10,7 @@ const trainers = [
 ];
 
 const Team = ({showButton=true, isShortDescription=true}) => {
-  return (
+  return ( 
     <Box sx={{ backgroundColor: '#121212', color: 'white', py: 8, px: 4 }}>
       <Box sx={{ maxWidth: '1200px', margin: '0 auto' }}>
         <Typography variant="h3" align="center" gutterBottom>
