@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Box, Typography } from "@mui/material";
 import aboutImage from "../../assets/about.png"; // Uistite sa, že máte obrázok v tejto ceste
 
+
 // Štýly pre Group1 (O nás)
 const sectionStyle = {
   backgroundColor: "#C20E4D", // Používame primárnu farbu pre pozadie

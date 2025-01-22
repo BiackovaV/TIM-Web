@@ -1,15 +1,41 @@
 import React, { useState } from 'react';
+import fotka1 from '../assets/fotka1.jpg'; 
+import fotka2 from '../assets/fotka2.jpg'; 
+import fotka3 from '../assets/fotka3.jpg'; 
+import fotka4 from '../assets/fotka4.jpg'; 
+import fotka5 from '../assets/fotka5.jpg'; 
+import fotka6 from '../assets/fotka6.jpg'; 
+import fotka7 from '../assets/fotka7.jpg'; 
+import fotka8 from '../assets/fotka8.jpg'; 
+import fotka9 from '../assets/fotka9.jpg'; 
+import fotka10 from '../assets/fotka10.jpg'; 
+import fotka11 from '../assets/fotka11.jpg'; 
+import fotka12 from '../assets/fotka12.jpg'; 
+import fotka13 from '../assets/fotka13.jpg'; 
+import fotka14 from '../assets/fotka14.jpg'; 
+import fotka15 from '../assets/fotka15.jpg'; 
 
 const Gallery = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Mockované údaje o obrázkoch
-  const galleryItems = Array.from({ length: 30 }, (_, index) => ({
-    title: `Obrázok ${index + 1}`,
-    description: 'Popis obrázka',
-    availability: 'Available soon. Get notified.',
-  }));
+  const galleryItems = [
+    { image: fotka1 },
+    { image: fotka2 },
+    { image: fotka3 },
+    { image: fotka4 },
+    { image: fotka5 },
+    { image: fotka6 },
+    { image: fotka7 },
+    { image: fotka8 },
+    { image: fotka9 },
+    { image: fotka10 },
+    { image: fotka11 },
+    { image: fotka12 },
+    { image: fotka13 },
+    { image: fotka14 },
+    { image: fotka15 },
+  ];
 
   const totalPages = Math.ceil(galleryItems.length / itemsPerPage);
 
@@ -22,7 +48,6 @@ const Gallery = () => {
     currentPage * itemsPerPage
   );
 
-  // Štýly ako objekty
   const styles = {
     gallery: {
       textAlign: 'center',
@@ -30,57 +55,33 @@ const Gallery = () => {
       backgroundColor: '#610726',
       color: '#fff',
       minHeight: '100vh',
-    },
-    title: {
-      fontSize: '2.5rem',
-      marginBottom: '10px',
-    },
-    description: {
-      fontSize: '1rem',
-      marginBottom: '20px',
+      fontSize:"64px", 
+      fontFamily:"Lora"
     },
     grid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(5, 1fr)',
       gap: '15px',
       marginBottom: '20px',
+      marginTop: "50px"
     },
     item: {
       background: 'linear-gradient(to bottom, #4e112c, #240a14)',
-      padding: '15px',
       borderRadius: '10px',
       color: '#fff',
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
-      textAlign: 'left',
-    },
-    itemHeader: {
-      marginBottom: '10px',
-    },
-    itemTitle: {
-      margin: '5px 0',
-      fontSize: '1.2rem',
-    },
-    itemDescription: {
-      fontSize: '0.9rem',
-      color: '#aaa',
-    },
-    footer: {
+      textAlign: 'center',
       display: 'flex',
-      justifyContent: 'space-between',
+      flexDirection: 'column',
+      justifyContent: 'center',
       alignItems: 'center',
-      fontSize: '0.9rem',
+      height: '300px',
+      
     },
-    button: {
-      backgroundColor: '#a03755',
-      border: 'none',
-      color: 'white',
-      padding: '5px 10px',
+    image: {
+      width: '100%',
+      height: 'auto',
       borderRadius: '5px',
-      cursor: 'pointer',
-      transition: 'background-color 0.3s ease',
-    },
-    buttonHover: {
-      backgroundColor: '#ff5f7f',
     },
     pagination: {
       display: 'flex',
@@ -95,7 +96,6 @@ const Gallery = () => {
       padding: '5px 10px',
       borderRadius: '50%',
       cursor: 'pointer',
-      transition: 'background-color 0.3s ease',
     },
     paginationButtonActive: {
       backgroundColor: '#ff5f7f',
@@ -105,26 +105,10 @@ const Gallery = () => {
   return (
     <div style={styles.gallery}>
       <h1 style={styles.title}>Galéria</h1>
-      <p style={styles.description}>
-        Lorem ipsum dolor sit amet consectetur. Aliquam egestas sed quam aliquam fermentum metus arcu quam et. Consectetur iaculis diam non amet in. Nunc lacus nisi adipiscing enim sed. Ultrices amet nibh fringilla accumsan.
-      </p>
       <div style={styles.grid}>
         {displayedItems.map((item, index) => (
           <div key={index} style={styles.item}>
-            <div style={styles.itemHeader}>
-              <span style={styles.itemDescription}>{item.description}</span>
-              <h2 style={styles.itemTitle}>{item.title}</h2>
-            </div>
-            <div style={styles.footer}>
-              <span>{item.availability}</span>
-              <button
-                style={styles.button}
-                onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
-                onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
-              >
-                Notify Me
-              </button>
-            </div>
+            <img src={item.image} alt={`Obrázok ${index + 1}`} style={styles.image} />
           </div>
         ))}
       </div>
