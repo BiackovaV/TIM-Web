@@ -4,11 +4,11 @@ import Contact from "../pages/Contact"
 
 
 const Cards = [
-    { id: 1, name: 'HVK TRÉNING',  description: ' 16:30 - 18:30 ' },
-    { id: 2, name: 'JVK TRÉNING',  description: ' 16:50 - 17:50 ' },
-    { id: 3, name: 'HVK TRÉNING',  description: ' 16:30 - 18:30 ' },
-    { id: 4, name: 'DVK TRÉNING',  description: ' 17:00 - 18:00 ' },
-    { id: 5, name: 'JVK TRÉNING',  description: ' 18:00 - 19:00 ' },
+    { id: 1, name: 'MIA FESTIVAL',  description: ' Tanečná súťaž KOŠICE 18.4.2025' },
+    { id: 2, name: 'BREAK-IN WORKSHOP',  description: ' KOŠICE 14.5.2025  Lektor: Ľubomír Pelko   17:00 Kultúrne Stredisko Nad Jazerom' },
+    { id: 3, name: 'EUROPEAN DANCE CUP',  description: 'Európska súťaž o pohár a postup  KANIJŽA SERBIA  20.5.2025' },
+    { id: 4, name: 'CONTEMPORARY WORKSHOP',  description: ' KOŠICE 12.6.2025 Lektor: Jana Rozhoňová  18:00 Kultúrne Stredisko Nad Jazerom' },
+    { id: 5, name: 'DANCE CAMP',  description: 'Tanečný tábor plný tréningov a nových znalostí   5.7-13.7.2025 Remetské Hámre ' },
   ];
 const Events = () => {
     return (
@@ -24,9 +24,9 @@ const Events = () => {
             textAlign: "center",
             fontFamily: "'Opens Sans', sans-serif",
             color: "#fff",
-            fontSize: "1.2rem"
+            FontSize: "116px"
          }}> 
-         <div style={{padding:"32px 350px 0px 350px", }}>
+         <div style={{padding:"32px 350px 0px 350px", FontSize: "116px", FontFamily: "Lora", color: "#C20E4D"}}>
             
             <h1>Udalosti</h1>
         
@@ -34,10 +34,10 @@ const Events = () => {
                      {Cards.map((card) => (
                          <Card sx={{ backgroundColor: '#fff', color: 'black', textAlign: 'Left',borderRadius: "8px",width:"40rem", marginTop: "8px", marginBottom:"16px"}}>
                            <CardContent>
-                             <Typography variant="h6" gutterBottom>
+                             <Typography style={{ FontSize: "16px", FontFamily: "Lora"}}variant="h6" gutterBottom>
                                {card.name}
                              </Typography>
-                             <Typography variant="body2">
+                             <Typography style={{ FontSize: "16px", FontFamily: "Lora"}} variant="body2">
                              {card.description}
                              </Typography>
                            </CardContent>

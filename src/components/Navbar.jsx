@@ -141,7 +141,7 @@ export default function DrawerAppBar(props) {
               <img src={logoImage} alt="Logo" style={{ width: 100 }} />
             </Link>
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" }, flexGrow: 1, textAlign: "center" }}>
+          <Box sx={{BackgroundColor: "#920B3A", display: { xs: "none", sm: "block" }, flexGrow: 1, textAlign: "center", BorderRadius:"54px" }}> 
             {navItems.map((item) => (
               <Button key={item.text} component={Link} to={item.path} sx={{ color: "#fff" }}>
                 {item.text}

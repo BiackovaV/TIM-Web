@@ -26,12 +26,14 @@ const headingStyle = {
   fontSize: "3rem",
   marginBottom: "20px",
   color: "#fff", // Nadpis biely
+  FontFamily: "Lora", 
 };
 
 const paragraphStyle = {
   fontSize: "1.2rem",
   marginBottom: "30px",
   color: "#fff", // Text biely
+  FontFamily: "Lora"
 };
 
 const imageContainerStyle = {
@@ -86,6 +88,7 @@ const Group1 = () => {
         <Box style={imageContainerStyle} /> {/* Obrázok na pravej strane */}
       </Container>
     </section>
+
   );
 };
 

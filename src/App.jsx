@@ -10,6 +10,8 @@ import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Profile from "./components/logged-user/Profile"; // Nezabudol si pridať Profile
+import { Schedule } from "@mui/icons-material";
+import Courses from "./pages/Schedule";
 
 const App = () => {
     const [theme, setTheme] = useState("light");
@@ -31,6 +33,7 @@ const App = () => {
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/profile" element={<Profile />} /> {/* Pridaj profilovú stránku */}
+                    <Route path="/schedule" element={<Courses />} />
                 </Routes>
             </Router>
         </ThemeProvider>

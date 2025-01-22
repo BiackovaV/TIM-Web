@@ -30,13 +30,15 @@ const About = () => {
 
 
     
-            <h1 style={{  fontSize: "3rem",
-                         fontFamily: "'Helvetica', sans-serif", 
+            <h1 style={{  fontSize: "116px",
+                         fontFamily: "'Lora", 
                          textAlign: "center",
                          color: "#C20E4D", 
                         }}>O nás:</h1>
                          
-            <p>
+            <p style={{  fontSize: "24px",
+                         fontFamily: "'Lora", 
+                         textAlign: "center"}}>
                 Sme tanečná škola a voláme sa <strong>T.I.M. GROUP SLOVAKIA.</strong> Sme občianské združenie, ktoré od roku <strong>1991</strong> pôsobí na tanečnej scéne až dodnes, 
                 čo je <strong>vyše 30 rokov pôsobenia</strong> nášho tanečného klubu na svetoznámych pódiách.
             </p>
