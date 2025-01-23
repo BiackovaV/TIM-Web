@@ -23,9 +23,10 @@ const Contact = () => {
 
     new mapboxgl.Marker({ color: "red" })
       .setLngLat([lng, lat])
-      .setPopup(new mapboxgl.Popup().setHTML("<h3>Random Location</h3>"))
+      .setPopup(new mapboxgl.Popup().setHTML(
+        "<h3 style={{ height: '100%'}}>T.I.M. Group Slovakia</h3>"))
       .addTo(map);
-
+    
     return () => map.remove();
   }, []);
 
