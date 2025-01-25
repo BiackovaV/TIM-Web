@@ -15,7 +15,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ToggleThemeButton from "./ToggleThemeButton";
-import logoImage from "../assets/logo.png";
 
 // Importovanie komponentov Material-UI
 import Dialog from "@mui/material/Dialog";
@@ -30,7 +29,7 @@ import { Slide } from "@mui/material"; // Import pre animáciu
 const drawerWidth = 240;
 const navItems = [
   { text: "Home", path: "/" },
-  { text: "About", path: "/about" },
+  { text: "O nás", path: "/about" },
   { text: "Contact", path: "/contact" },
   { text: "Events", path: "/events" },
   { text: "Gallery", path: "/gallery" },
@@ -83,9 +82,7 @@ export default function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        <Link to="/">
-          <img src={logoImage} alt="Logo" style={{ width: 100 }} />
-        </Link>
+       
       </Typography>
       <Divider />
       <List>
@@ -137,9 +134,6 @@ export default function DrawerAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/">
-              <img src={logoImage} alt="Logo" style={{ width: 100 }} />
-            </Link>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" }, flexGrow: 1, textAlign: "center" }}>
             {navItems.map((item) => (
