@@ -1,6 +1,6 @@
 import { HashLink } from "react-router-hash-link";
 import { Paper, Switch, AppBar, Box, CssBaseline, Toolbar, Button, Modal, TextField, Checkbox, FormControlLabel, FormHelperText, Drawer, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -12,6 +12,11 @@ import Contact from "./components/Contact";
 import EventsSub from "./pages/EventsSub";
 import GallerySub from "./pages/GallerySub";
 import Schedule from "./pages/Schedule";
+import './LoginSignup.css';
+import axios from "axios";
+import userIcon from "./components/Assets/user.png";
+import mailIcon from "./components/Assets/mail.png";
+import passwordIcon from "./components/Assets/unlock.png";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -25,25 +30,66 @@ function App() {
   const [emailError, setEmailError] = useState(""); 
   const [openDrawer, setOpenDrawer] = useState(false); // Stav pre otvorený/zakrytý Drawer
 
-  const appTheme = createTheme({
-    typography: {
-      fontSize: 16,
-      fontFamily: "'Lora', serif",
-      h1: { fontSize: "2.25rem" },
-      h2: { fontSize: "2rem" },
-      h3: { fontSize: "1.75rem" },
-      h4: { fontSize: "1.5rem" },
-      h5: { fontSize: "1.25rem" },
-      h6: { fontSize: "1rem" },
-    },
-    palette: {
-      mode: mode ? "dark" : "light",
-    },
+  const [action, setAction] = useState("Registrácia");
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
 
-  const handleChange = () => {
-    setMode(!mode);
+  const navItems = [
+    { label: "Home", path: "/" },
+    { label: "Schedule", path: "/schedule" },
+    { label: "About Us", path: "/about" },
+    { label: "Events", path: "/events" },
+    { label: "Gallery", path: "/gallery" },
+    { label: "FAQ", path: "/faq" },
+    { label: "Contact", path: "/contact" },
+  ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+
+  const handleSubmit = async () => {
+    try {
+      if (action === "Registrácia") {
+        const response = await axios.post("http://localhost:5000/register", formData);
+        alert(response.data.message);
+      } else {
+        const response = await axios.post("http://localhost:5000/login", {
+          email: formData.email,
+          password: formData.password,
+        });
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Something went wrong!");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter') handleSubmit();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [formData, action]);
 
   const handleOpenLoginModal = () => {
     setOpenLoginModal(true);
@@ -53,38 +99,12 @@ function App() {
     setOpenLoginModal(false);
   };
 
-  const handleLoginSubmit = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-      setEmailError("Prosím zadajte platný email.");
-      return;
-    } else {
-      setEmailError(""); 
-    }
-    console.log("Prihlásenie úspešné s emailom:", email);
-    setOpenLoginModal(false);
+  const handleChange = (event) => {
+    setMode(event.target.checked);
   };
-
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleRememberMeChange = (event) => {
-    setRememberMe(event.target.checked);
-  };
-
-  const navItems = [
-    { label: "Domov", path: "/" },
-    { label: "Rozvrh", path: "/schedule" },
-    { label: "O nás", path: "/about" },
-    { label: "Udalosti", path: "/events" },
-    { label: "Galéria", path: "/gallery" },
-    { label: "FAQ", path: "/#faq-section" },
-    { label: "Kontakt", path: "/contact" },
-  ];
 
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={createTheme({ palette: { mode: mode ? 'dark' : 'light' } })}>
       <CssBaseline />
       <Router>
         <Paper elevation={0} sx={{ height: "100vh" }}>
@@ -124,61 +144,12 @@ function App() {
                     inputProps={{ "aria-label": "controlled" }}
                     sx={{
                       ml: 2,
-                      "& .MuiSwitch-thumb": { backgroundColor: "#C20E4D" },
-                      "& .MuiSwitch-track": { backgroundColor: "#FFF" },
-                      "& .MuiSwitch-rail": { backgroundColor: "#F9E0E6" },
                     }}
                   />
-                  {isMobile && ( // Ak je mobil, zobrazí sa hamburger ikona
-                    <IconButton onClick={() => setOpenDrawer(!openDrawer)} sx={{ color: "#F9E0E6", marginLeft: "10px" }}>
-                      <MenuIcon />
-                    </IconButton>
-                  )}
                 </Box>
               </Box>
             </Toolbar>
           </AppBar>
-
-          {/* Mobile Drawer */}
-          <Drawer
-            anchor="left"
-            open={openDrawer}
-            onClose={() => setOpenDrawer(false)}
-            sx={{
-              "& .MuiDrawer-paper": {
-                backgroundColor: "#000",
-                color: "#610726",
-                padding: "16px",
-              },
-            }}
-          >
-            <Box sx={{ width: 250 }}>
-              <Box component="img" src="/images/logo.svg" alt="Logo" sx={{ height: "60px", marginBottom: 2 }} />
-             
-              <Box sx={{ marginTop: 3, display: "flex", flexDirection: "column", justifyContent: "left"}}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.label}
-                    component={HashLink}
-                    smooth
-                    to={item.path}
-                    sx={{ color: "#FFF", marginBottom: 2 }}
-                    onClick={() => setOpenDrawer(false)} // Zavrieme Drawer po kliknutí
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-                {/* Tlačidlo Prihlásiť sa v mobile menu */}
-                <Button
-                  variant="outlined"
-                  sx={{ color: "#F9E0E6", borderColor: "#F9E0E6", marginTop: 2 }}
-                  onClick={handleOpenLoginModal}
-                >
-                  Prihlásiť sa
-                </Button>
-              </Box>
-            </Box>
-          </Drawer>
 
           {/* Modal for Login */}
           <Modal
@@ -190,109 +161,81 @@ function App() {
               alignItems: "center",
               backdropFilter: "blur(3px)",
               "& .MuiBox-root": {
-      marginLeft: isMobile ? "16px" : "auto",
-      marginRight: isMobile ? "16px" : "auto",
-   
-    },
+                marginLeft: isMobile ? "16px" : "auto",
+                marginRight: isMobile ? "16px" : "auto",
+              },
             }}
           >
-            <Box sx={{
+            <div style ={{
+              display: "flex",
+              flexDirection: "column",
+              margin: "auto",
+              maringTop: "200px",
               backgroundColor: "#F2D7E0",
-              padding: "30px",
+              paddingBottom: "30px",
               borderRadius: "10px",
               width: "600px",
               textAlign: "left",
               boxShadow: 3,
             }}>
-              <h2 style={{ color: "#610726", marginBottom: "20px" }}>Prihlásenie</h2>
-              
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="Váš email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                InputLabelProps={{
-                  style: { color: "#610726" },
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "#610726" },
-                    marginBottom: "8px",
-                    "&:hover fieldset": { borderColor: "#610726" },
-                    "&.Mui-focused fieldset": { borderColor: "#610726" },
-                  },
-                  input: { color: "#610726" },
-                }}
-              />
-              {emailError && (
-                <FormHelperText error sx={{ marginTop: 0, color: "#D32F2F", marginBottom: "16px" }}>
-                  {emailError}
-                </FormHelperText>
-              )}
-
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="Vaše heslo"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputLabelProps={{
-                  style: { color: "#610726" },
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "#610726" },
-                    marginBottom: "24px",
-                    "&:hover fieldset": { borderColor: "#610726" },
-                    "&.Mui-focused fieldset": { borderColor: "#610726" },
-                  },
-                  input: { color: "#610726" },
-                }}
-              />
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={rememberMe}
-                    onChange={handleRememberMeChange}
-                    sx={{
-                      color:"#610726",
-                      "&.Mui-checked": { color: mode ? "#4CAF50" : "#17C964" },
-                    }}
+              <div className = "header">
+                <div className = "text"> {action} </div>
+                <div className = "underline"> </div>
+              </div>
+              <div className = "inputs">
+                { action === "Prihlásiť sa" ? null : (
+                  <div className = "input">
+                    <img src = {userIcon} alt ="User icon" />
+                    <input
+                      type = "text"
+                      name = "username"
+                      placeholder = "Meno"
+                      value = {formData.username}
+                      onChange = {handleInputChange}
+                      />
+                  </div>
+                )}
+                <div className = "input">
+                  <img src = {mailIcon} alt = "Mail icon" />
+                  <input
+                    type = "email"
+                    name = "email"
+                    placeholder = "Email"
+                    value = {formData.email}
+                    onChange = {handleInputChange}
                   />
-                }
-                label="Zapamätať prihlásenie"
-                sx={{
-                    color: "#610726"
-                }}
-              />
-
-              <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
-                <Button
-                  onClick={handleCloseLoginModal}
-                  sx={{
-                    backgroundColor: "#FFF",
-                    color: "#920B3A",
-                    width: "48%",
-                  }}
-                >
-                  Zatvoriť
-                </Button>
-                <Button
-                  onClick={handleLoginSubmit}
-                  sx={{
-                    backgroundColor: "#FFF",
-                    color: "#920B3A",
-                    width: "48%",
-                  }}
-                >
-                  Prihlásiť
-                </Button>
-              </Box>
-            </Box>
+                </div>
+                <div className = "input">
+                  <img src = {passwordIcon} alt = "Password icon" />
+                  <input
+                    type = "password"
+                    name = "password"
+                    placeholder = "Heslo"
+                    value = {formData.password}
+                    onChange = {handleInputChange}
+                  />
+                </div>
+              </div>
+              { action === "Registrácia" ? null : (
+                <div className = "forgot-password">
+                  Zabudli ste heslo? <span> Klikni sem! </span>
+                </div>
+              )}
+              <div className = "submit-container">
+                <div
+                  className = {action === "Prihlásiť sa" ? "submit gray" : "submit"}
+                  onClick = {() => setAction("Registrácia")}
+                  >
+                    Registrácia
+                </div>
+                <div
+                  className = {action === "Registrácia" ? "submit gray" : "submit"}
+                  onClick = {() => setAction("Prihlásiť sa")}
+                  >
+                    Prihlásiť sa
+                </div>
+              </div>
+            </div>
           </Modal>
 
           <Routes>

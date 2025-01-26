@@ -98,8 +98,7 @@ const FAQ = ({ mode }) => {
           <Typography component="span">Je možné prihlásiť sa na dva kurzy naraz?</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{
-            textAlign: "left"
-            
+            textAlign: "left"           
         }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
           malesuada lacus ex, sit amet blandit leo lobortis eget.
