@@ -1,275 +1,270 @@
-import React from "react";
-import { Grid, Typography, CardContent, Card, CardMedia,Button, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
-import DVK from "../assets/DVK.jpg"; 
-import JVK from "../assets/JVK.jpg"; 
-import HVK from "../assets/HVK.jpg";
-import Contact from "../pages/Contact"
 
-const label = { inputProps: { 'aria-label': 'Checkbox label' } };
+import React, { useState, useRef } from "react";
+import { Box, Typography, Card, Button, TextField, Checkbox, FormControlLabel } from "@mui/material";
+import Contact from "../components/Contact";
 
-const buttonStyle = {
-  marginTop: "20px",
-  color: "#fff",
-  backgroundColor: "#fff", // Tlačidlo biele
-  "&:hover": {
-    backgroundColor: "#e0e0e0", // Tmavší odtieň pri hoveri
-  },
-};
+const Schedule = ({ mode }) => {
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [isChecked, setIsChecked] = useState(false); // Stav pre checkbox
 
-const Cards = [
-  { id: 1, name: 'DVK - Detská veková kategória', foto: DVK , description: 'od 3-6 rokov. --> Každý štvrtok 17:00-18:00', description2: "15€ Mesačne" },
-  { id: 2, name: 'JVK - Juniorská veková kategória', foto: JVK ,  description: 'od 6-11 rokov. --> Každý utorok 16:50-17:50 a štvrtok 18:00-19:00', description2:"25€ Mesačne" },
-  { id: 3, name: 'HVK - Hlavná veková kategória', foto: HVK , description: 'od 12 + rokov. --> Každý pondelok a stredu 16:30-18:30', description2:"35€ Mesačne"},
-];
+  const formSectionRef = useRef(null);
+  const coursesRef = useRef(null);
 
-const Courses = () => {
+  const courses = [
+    {
+      id: 1,
+      title: "DVK kurz",
+      description: "Detská veková skupina detí od 3-6 rokov každý štvrtok o 17:00 - 18:00",
+      price: "15€ mesačne",
+      image: "../images/schedule.png",
+    },
+    {
+      id: 2,
+      title: "JVK kurz",
+      description: "Detská veková skupina detí od 6-11 rokov každý utorok o 18:00 - 19:00 a štvrtok o 16:30 - 17:30",
+      price: "25€ mesačne",
+      image: "../images/schedule.png",
+    },
+    {
+      id: 3,
+      title: "HVK kurz",
+      description: "Detská veková skupina detí od 12+ rokov každý pondelok o 16:30 - 18:30 a stredu o 16:30 - 18:30",
+      price: "35€ mesačne",
+      image: "../images/schedule.png",
+    },
+  ];
+
+  const handleSelect = (id) => {
+    setSelectedCourse((prev) => {
+      const newSelected = prev === id ? null : id;
+
+      // Scroll to the form section
+      if (newSelected) {
+        setTimeout(() => {
+          if (formSectionRef.current) {
+            formSectionRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start", // Scroll to the start of the form section
+            });
+          }
+        }, 100);
+      }
+
+      return newSelected;
+    });
+  };
+
+  const handleCancel = () => {
+    setSelectedCourse(null);
+    // Scroll back to the courses section (to start of the courses section)
+    if (coursesRef.current) {
+      setTimeout(() => {
+        coursesRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start", // Scroll back to the start of the courses section
+        });
+      }, 100);
+    }
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Zmena stavu checkboxu
+  };
+
   return (
-    <div
-      style={{
-        flexDirection:"column",
+    <Box
+      sx={{
         width: "100%",
-        minHeight: "100svh",
-        height: "80%",
-        display: "flex",
-        justifyItems: "center",
-        alignItems: "center",
-        backgroundColor: '#121212',
-        textAlign: "center",
-        fontFamily: "'Open Sans', sans-serif",
-        color: "#fff",
-        fontSize: "1.2rem",
-        
-      }} 
+        backgroundColor: mode ? "#181818" : "#F9E0E6",
+        color: mode ? "#F9E0E6" : "#181818",
+        paddingTop: "150px",
+      }}
     >
-      <div style={{ 
-                    fontSize: "2rem",
-                    fontFamily: "'Helvetica', sans-serif", 
-                    textAlign: "center",
-                     color: "#C20E4D" }}>
-                        <div style={{padding:"32px 350px 0px 350px", }}></div>
-        <h1>Rozvrh hodín</h1>
-      </div>
-      <p>Vitajte na stránke ponuky kurzov. Prezrite si jednotlivé kurzy a zaregistrujte Vaše dieťa hneď !</p>
-      <div
-      style={{
-        width: "85%",
-        minHeight: "100svh",
-        height: "100%",
-        display: "flex",
-        justifyItems: "center",
-        alignItems: "center",
-        backgroundColor: '#121212',
-        textAlign: "center",
-        fontFamily: "'Open Sans', sans-serif",
-        color: "#fff",
-        fontSize: "1.2rem",
-        
-      }} 
-    >
-      {Cards.map((course) => (
-        <Card
-          key={course.id} 
+      {/* Title Section */}
+      <Box sx={{ textAlign: "center", marginBottom: "40px", padding: { xs: "0 16px", md: "100px 0" }, }}>
+        <Typography
+          variant="h1"
+          sx={{ fontWeight: "bold", color: mode ? "#C20E4D" : "#610726", fontSize: {md:"5rem", xs:"3rem"} }}
+        >
+          Rozvrh hodín
+        </Typography>
+        <Typography
+          variant="h4"
           sx={{
-            backgroundColor: '#fff',
-            color: 'black',
-            textAlign: 'Left',
-            borderRadius: "8px",
-            width: "40rem",
-            marginTop: "-400px",
-            height:"20%",
-            height:"30rem",
-            width:"35rem",
-            marginRight:"3rem",
-            marginLeft:"1rem",
-            fontSize: "1.2rem",
-            marginBottom:"-200px"
-
+            fontWeight: "normal",
+            fontSize: { xs: "1.2rem", sm: "1.3rem", md: "1.5rem" },
+            width: { md:"70%", sx:"100%"},
+            margin: "0 auto",
           }}
-        ><CardMedia 
-                        image = {course.foto}
-                          component="img"
-                          alt={course.name}
-                          sx={{
-                            borderRadius: '0%',
-                            width: '100%',
-                            height: '60%',
-                            mx: 'auto',
-                            mt: 2,
-                            backgroundColor: 'white',
-                            marginTop:"0px"
-                          }}
-                        />
-            
-          <CardContent>
-            <Typography style = {{ fontSize:"1.1rem", marginTop: "2px"}} variant="h6" gutterBottom>
-              {course.name}
-            </Typography>
-            <Typography style = {{ fontSize:"1.2rem"}} variant="body2">
-              {course.description}
-            </Typography>
-            <Typography style = {{ fontSize:"1.4rem", marginTop: "18px"}} variant="body2">
-              {course.description2}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
-      </div>
+        >
+          Vitajte na stránke rozvrhu hodín pre vaše deti. My im pomôžeme blá blá blá. Pozrite si jednotlivé kurzy blá blá blá a zaregistrujte Vaše dieťa.
+        </Typography>
+      </Box>
 
-
-      <div
-  style={{
-    width: "100%", // Full width of the viewport
-    height: "100%", // Full height of the viewport
-    display: "flex", // Use flexbox
-    justifyContent: "center", // Center items horizontally
-    alignItems: "center", // Center items vertically
-    backgroundColor: "#121212", // Background color
-    fontFamily: "'Open Sans', sans-serif", // Font style
-    marginBottom: "10rem",
-    marginTop:"-200px"
-  }}
->
-  <div style={{ display: "flex", gap: "340px",justifyContent:"right", alignItems:"right",  marginTop: "0px"}}>
-    <Button
-      variant="outlined"
-      color="inherit"
-      sx={{
-        borderColor: "#fff",
-        color: "#fff",
-        borderWidth: 2,
-        boxShadow: "none",
-        "&:hover": {
-          borderColor: "#fff",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          boxShadow: "none",
-        },
-      }}
-    >
-      Zvoliť
-    </Button>
-    <Button
-      variant="outlined"
-      color="inherit"
-      sx={{
-        borderColor: "#fff",
-        color: "#fff",
-        borderWidth: 2,
-        boxShadow: "none",
-        "&:hover": {
-          borderColor: "#fff",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          boxShadow: "none",
-        },
-      }}
-    >
-      Zvoliť
-    </Button>
-    <Button
-      variant="outlined"
-      color="inherit"
-      sx={{
-        borderColor: "#fff",
-        color: "#fff",
-        borderWidth: 2,
-        boxShadow: "none",
-        "&:hover": {
-          borderColor: "#fff",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          boxShadow: "none",
-        },
-      }}
-    >
-      Zvoliť
-    </Button>
-  </div>
-</div>     
-<div style={{ height:"70svh",
-              marginTop:"-80px",
-              fontSize: "2rem",
-              fontFamily: "'Helvetica', sans-serif", 
-              textAlign: "center",
-               color: "#C20E4D" }}>
-              <div style={{padding:"5px 350px 0px 350px", }}></div>
-        <h1>Vaše kontaktné údaje</h1>
-      <p  style = {{ fontSize:"12px", textAlign: "left", color:"white", fontFamily:"Lora",marginBottom:"-5px"}}>
-        Meno dieťaťa
-      </p>
-        <input
-            style={{
-              padding: "5px",
-              borderRadius: "8px",
-              width: "100%",
-              height: "2.5rem",
-            }}
-            type="text"
-            placeholder=""
-            required
-          />
-          <p  style = {{ fontSize:"12px", textAlign: "left", color:"white", fontFamily:"Lora",marginBottom:"-5px"}}>
-           Váš e-mail
-          </p>
-          <input
-            style={{
-              padding: "5px",
-              borderRadius: "8px",
-              width: "100%",
-              height: "2.5rem",
-            }}
-            type="email"
-            placeholder=""
-            required
-          />
-          <p  style = {{ fontSize:"12px", textAlign: "left", color:"white", fontFamily:"Lora",marginBottom:"-5px"}}>
-           Vaše telefónne číslo
-          </p>
-          <input
-            style={{
-              padding: "5px",
-              borderRadius: "8px",
-              width: "100%",
-              height: "2.5rem",
-            }}
-            type="email"
-            placeholder=""
-            required
-          />
-       <FormGroup style={{ fontSize: "14px", textAlign: "left", color: "white", fontFamily: "Lora", marginBottom: "-5px" }}>
-      <FormControlLabel
-        control={
-          <Checkbox
+      {/* Courses Section */}
+      <Box
+        ref={coursesRef}
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "20px",
+          padding: "0 20px",
+          marginBottom: "56px",
+        }}
+      >
+        {courses.map((course) => (
+          <Card
+            key={course.id}
             sx={{
-              color: "green", 
-              '&.Mui-checked': {
-                color: "green", 
-              },
+              width: {md:"300px", xs:"100%"},
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: "10px",
+              overflow: "hidden",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
             }}
-          />
-        }
-        label="Súhlasím s odoslaním prihlášky"
-      />
-    </FormGroup>
-    <Button
-                variant="outlined"
-                color="inherit"
+          >
+            {/* Upper Section */}
+            <Box
+              sx={{
+                height: "300px",
+                backgroundImage: `url(${course.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                padding: "16px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                color: "#F9E0E6",
+              }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: "8px" }}>
+                {course.title}
+              </Typography>
+              <Typography variant="body2">{course.description}</Typography>
+            </Box>
+
+            {/* Lower Section */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "16px",
+                backgroundColor: mode ? "#F9E0E6" : "#181818",
+                color: mode ? "#181818" : "#F9E0E6",
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {course.price}
+              </Typography>
+              <Button
+                onClick={() => handleSelect(course.id)}
                 sx={{
-                  borderColor: "#fff",
-                  color: "#fff",
-                  borderWidth: 2,
-                  boxShadow: "none",
-                  "&:hover": {
-                    borderColor: "#fff",
-                    backgroundColor: "#920B3A",
-                    boxShadow: "none",
-                  },
+                  backgroundColor: "#C20E4D",
+                  color: "#FFF",
+                  borderRadius: "20px",
+                  textTransform: "none",
+                  ":hover": { backgroundColor: "#A10B3C" },
                 }}
               >
-                Odoslať
+                {selectedCourse === course.id ? "Zrušiť" : "Zvoliť"}
               </Button>
-        </div>
-        <Contact/>  
-</div>   
-      
- );
+            </Box>
+          </Card>
+        ))}
+      </Box>
+
+      {/* Form Section */}
+      {selectedCourse && (
+        <Box
+          ref={formSectionRef}
+          id="form-section"
+          sx={{
+            marginTop: "40px",
+            padding: "20px",
+            maxWidth: "600px",
+            margin: "40px auto",
+            color: mode ? "#181818" : "#F9E0E6",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: "16px", color: "#C20E4D" }}>
+            Vaše kontaktné údaje
+          </Typography>
+          <TextField
+            fullWidth
+            label="Meno dieťaťa"
+            variant="outlined"
+            sx={{
+              marginBottom: "16px",
+              borderRadius: "5px",
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Váš email"
+            variant="outlined"
+            sx={{
+              marginBottom: "16px",
+              borderRadius: "5px",
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Vaše telefónne číslo"
+            sx={{
+              marginBottom: "16px",
+              borderRadius: "5px",
+              borderColor: mode ? "#FFF" : "#F9E0E6",
+            }}
+          />
+          
+          {/* Checkbox - Zarovnaný s textom */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isChecked} // stav checkboxu
+                onChange={handleCheckboxChange} // zmena stavu
+                sx={{
+                  color: "#17C964",
+                  marginBottom: "20px",
+                }}
+              />
+            }
+            label="Záväzne sa registrujem, a zároveň súhlasím s vytvorením účtu"
+            sx={{
+              color: "#C20E4D",
+              marginBottom: "16px",
+            }}
+          />
+          
+          {/* Tlačidlo prechod na platbu */}
+          <Button
+            fullWidth
+            sx={{
+              marginTop: "16px",
+              backgroundColor: "#C20E4D",
+              color: "#FFF",
+              borderRadius: "20px",
+              padding: "10px 0",
+              textTransform: "none",
+              ":hover": { backgroundColor: "#A10B3C" },
+            }}
+            disabled={!isChecked} // Ak nie je checkbox zaškrtnutý, tlačidlo je disabled
+          >
+            Prejsť na platbu
+          </Button>
+        </Box>
+      )}
+
+      {/* Contact Section */}
+      <Contact mode={mode} />
+    </Box>
+  );
 };
 
-export default Courses;
+export default Schedule;
+
